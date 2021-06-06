@@ -17,6 +17,7 @@ import com.hardik.hadraniel.dto.UserCreationRequestDto;
 import com.hardik.hadraniel.dto.UserDto;
 import com.hardik.hadraniel.dto.UserLoginRequestDto;
 import com.hardik.hadraniel.entity.User;
+import com.hardik.hadraniel.exception.DuplicateEmailIdException;
 import com.hardik.hadraniel.exception.InvalidPasswordException;
 import com.hardik.hadraniel.exception.InvalidUserIdException;
 import com.hardik.hadraniel.exception.OneTimePasswordValidationFailureException;
@@ -32,9 +33,16 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
+	private boolean exists(final String emailId) {
+		return userRepository.existsByEmailId(emailId);
+	}
+
 	public ResponseEntity<?> createUser(final UserCreationRequestDto userCreationRequest) {
 		final var user = new User();
 		final var response = new JSONObject();
+
+		if (exists(userCreationRequest.getEmailId()))
+			throw new DuplicateEmailIdException();
 
 		user.setEmailId(userCreationRequest.getEmailId());
 		user.setFullName(userCreationRequest.getFullName());
