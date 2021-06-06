@@ -82,8 +82,7 @@ public class UserService {
 		oneTimePasswordCache.put(user.getId(), otp);
 
 		response.put(ApiConstants.OTP, otp);
-		response.put(ApiConstants.MESSAGE,
-				"You Can Use This OTP to change your password by hitting the change-password endpoint, The generated OTP will expire in 5 minutes");
+		response.put(ApiConstants.MESSAGE, ApiConstants.OTP_GENERATION_SUCCESS);
 		response.put(ApiConstants.TIMESTAMP, LocalDateTime.now().toString());
 		return ResponseEntity.ok(response.toString());
 	}
