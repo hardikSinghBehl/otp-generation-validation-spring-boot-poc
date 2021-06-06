@@ -1,5 +1,6 @@
 package com.hardik.hadraniel.bean;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,11 +22,11 @@ public class OtpCacheBean {
 	private final OneTimePasswordConfigurationProperties oneTimePasswordConfigurationProperties;
 
 	@Bean
-	public LoadingCache<String, Integer> loadingCache() {
+	public LoadingCache<UUID, Integer> loadingCache() {
 		final var expirationMinutes = oneTimePasswordConfigurationProperties.getOtp().getExpirationMinutes();
 		return CacheBuilder.newBuilder().expireAfterWrite(expirationMinutes, TimeUnit.MINUTES)
 				.build(new CacheLoader<>() {
-					public Integer load(String key) {
+					public Integer load(UUID key) {
 						return 0;
 					}
 				});
