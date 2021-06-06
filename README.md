@@ -45,6 +45,12 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+Run the below command to run Tests
+
+```
+mvn test
+```
+
 server port is configured to 8090 and expiration minute(s) for OTP is configured to 5 minutes (can be changed in application.properties file)
 
 Go to the below url to view swagger-ui (API docs)
