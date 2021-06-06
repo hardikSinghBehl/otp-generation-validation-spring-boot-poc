@@ -41,8 +41,8 @@ public class AuthenticationController {
 	@GetMapping(value = ApiConstants.FORGOT_PASSWORD + ApiConstants.EMAIL_ID_PATH_VARIABLE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = ApiConstants.FORGOT_PASSWORD_SUMMARY)
-	public Integer forgotPasswordHandler(@PathVariable(name = "emailId", required = true) final String emailId)
-			throws ExecutionException {
+	public ResponseEntity<?> forgotPasswordHandler(
+			@PathVariable(name = "emailId", required = true) final String emailId) throws ExecutionException {
 		return userService.generateOtp(emailId);
 	}
 

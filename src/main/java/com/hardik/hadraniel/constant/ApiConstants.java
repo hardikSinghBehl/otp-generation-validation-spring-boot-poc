@@ -23,5 +23,6 @@ public class ApiConstants {
 	public static final String CHANGE_PASSWORD_SUMMARY = "Changes Users Password In The System If OTP is Validated";
 	public static final String EMAIL_ID_PATH_VARIABLE = "/{emailId}";
 	public static final String DUPLICATE_EMAIL = "Account Already Exists With Entered Email-id";
+	public static final String OTP = "One Time Password";
 
 }

@@ -71,8 +71,9 @@ public class UserService {
 				.id(user.getId()).build();
 	}
 
-	public Integer generateOtp(final String emailId) throws ExecutionException {
+	public ResponseEntity<?> generateOtp(final String emailId) throws ExecutionException {
 		final var user = userRepository.findByEmailId(emailId).orElseThrow(() -> new InvalidUserIdException());
+		final var response = new JSONObject();
 
 		if (oneTimePasswordCache.get(user.getId()) != null)
 			oneTimePasswordCache.invalidate(user.getId());
@@ -80,7 +81,11 @@ public class UserService {
 		final var otp = new Random().ints(1, 100000, 999999).sum();
 		oneTimePasswordCache.put(user.getId(), otp);
 
-		return otp;
+		response.put(ApiConstants.OTP, otp);
+		response.put(ApiConstants.MESSAGE,
+				"You Can Use This OTP to change your password by hitting the change-password endpoint, The generated OTP will expire in 5 minutes");
+		response.put(ApiConstants.TIMESTAMP, LocalDateTime.now().toString());
+		return ResponseEntity.ok(response.toString());
 	}
 
 	private boolean validateOtp(final User user, final Integer otp) throws ExecutionException {
