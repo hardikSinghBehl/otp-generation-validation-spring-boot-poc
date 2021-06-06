@@ -89,6 +89,8 @@ public class UserService {
 			user.setPassword(passwordEncoder.encode(forgotPasswordChangeRequest.getNewPassword()));
 			userRepository.save(user);
 
+			oneTimePasswordCache.invalidate(user.getId());
+
 			response.put(ApiConstants.MESSAGE, ApiConstants.PASSWORD_CHANGE_SUCCESS);
 			response.put(ApiConstants.TIMESTAMP, LocalDateTime.now().toString());
 			return ResponseEntity.ok(response.toString());
