@@ -2,6 +2,8 @@ package com.hardik.hadraniel.controller;
 
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +34,7 @@ public class UserController {
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = ApiConstants.USER_ACCOUNT_CREATION_SUMMARY)
 	public ResponseEntity<?> useAccountCreationHandler(
-			@RequestBody(required = true) final UserCreationRequestDto userCreationRequest) {
+			@Valid @RequestBody(required = true) final UserCreationRequestDto userCreationRequest) {
 		return userService.createUser(userCreationRequest);
 	}
 

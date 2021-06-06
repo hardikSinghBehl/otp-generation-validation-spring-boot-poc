@@ -3,6 +3,8 @@ package com.hardik.hadraniel.controller;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,7 @@ public class AuthenticationController {
 	@PostMapping(value = ApiConstants.LOGIN)
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = ApiConstants.LOGIN_SUMMARY)
-	public UUID userLoginHandler(@RequestBody(required = true) final UserLoginRequestDto userLoginRequest) {
+	public UUID userLoginHandler(@Valid @RequestBody(required = true) final UserLoginRequestDto userLoginRequest) {
 		return userService.login(userLoginRequest);
 	}
 
@@ -48,7 +50,7 @@ public class AuthenticationController {
 	@ResponseStatus(value = HttpStatus.OK)
 	@Operation(summary = ApiConstants.CHANGE_PASSWORD_SUMMARY)
 	public ResponseEntity<?> boom(
-			@RequestBody(required = true) final ForgotPasswordChangeRequestDto forgotPasswordChangeRequest)
+			@Valid @RequestBody(required = true) final ForgotPasswordChangeRequestDto forgotPasswordChangeRequest)
 			throws ExecutionException {
 		return userService.changePassword(forgotPasswordChangeRequest);
 	}
